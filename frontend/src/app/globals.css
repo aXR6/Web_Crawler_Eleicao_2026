@@ -1,0 +1,285 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-exo), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-exo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-chakra), var(--font-exo), sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-surface: var(--surface);
+  --color-neon: var(--neon);
+  --color-eleito: var(--eleito);
+  --color-segundo: var(--segundo);
+  --color-neutro: var(--neutro);
+  --color-validos: var(--validos);
+  --color-brancos: var(--brancos);
+  --color-nulos: var(--nulos);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+@theme {
+  --animate-radar: radar 2.6s linear infinite;
+  --animate-flicker: flicker 1.8s linear 1 both;
+  --animate-surgir: surgir 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-crescer: crescer 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-pulso: pulso 2.4s ease-out infinite;
+  --animate-fluxo: fluxo 3.2s linear infinite;
+
+  @keyframes radar {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes flicker {
+    0%, 6%, 10%, 100% { opacity: 1; }
+    3%, 8% { opacity: 0.35; }
+  }
+  @keyframes surgir {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+  @keyframes crescer {
+    from {
+      transform: scaleX(0);
+    }
+  }
+  @keyframes pulso {
+    0% { transform: scale(0.6); opacity: 0.9; }
+    100% { transform: scale(2.4); opacity: 0; }
+  }
+  @keyframes fluxo {
+    from { background-position: -40% 0; }
+    to { background-position: 140% 0; }
+  }
+}
+
+/* Tema escuro único (HUD). Cores dos gráficos validadas com o validador de paleta
+   do dataviz contra a superfície #0a1222: eleito×2º turno e válidos×brancos×nulos. */
+:root {
+  color-scheme: dark;
+  --radius: 0.625rem;
+  --background: #050913;
+  --foreground: #e6edf7;
+  --surface: #0a1222;
+  --card: rgb(10 18 34 / 0.8);
+  --card-foreground: #e6edf7;
+  --popover: #0b1528;
+  --popover-foreground: #e6edf7;
+  --primary: #38bdf8;
+  --primary-foreground: #021019;
+  --secondary: #111d35;
+  --secondary-foreground: #dbe5f3;
+  --muted: #0f1a30;
+  --muted-foreground: #9aa8c0;
+  --accent: #13233f;
+  --accent-foreground: #e6edf7;
+  --destructive: #f87171;
+  --border: rgb(56 189 248 / 0.16);
+  --input: rgb(148 163 184 / 0.22);
+  --ring: #38bdf8;
+  --neon: #38bdf8;
+  --neon-2: #a78bfa;
+  --eleito: #3987e5;
+  --segundo: #d95926;
+  --neutro: #64748b;
+  --validos: #199e70;
+  --brancos: #c98500;
+  --nulos: #d55181;
+  --chart-1: var(--validos);
+  --chart-2: var(--brancos);
+  --chart-3: var(--nulos);
+  --chart-4: var(--eleito);
+  --chart-5: var(--segundo);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    background: var(--background);
+  }
+  body {
+    @apply text-foreground;
+    background:
+      radial-gradient(1100px 620px at 8% -12%, rgb(56 189 248 / 0.13), transparent 62%),
+      radial-gradient(900px 520px at 100% -4%, rgb(167 139 250 / 0.11), transparent 60%),
+      var(--background);
+    background-attachment: fixed;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  ::selection {
+    background: rgb(56 189 248 / 0.35);
+  }
+}
+
+@layer components {
+  /* Painel HUD: vidro escuro, borda fina e cantoneiras em neon. */
+  .hud-panel {
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, rgb(15 27 50 / 0.86), rgb(8 14 28 / 0.84));
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.04),
+      0 24px 60px -36px rgb(0 0 0 / 0.9),
+      0 0 46px -30px rgb(56 189 248 / 0.5);
+    backdrop-filter: blur(14px);
+  }
+  .hud-panel::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    pointer-events: none;
+    border-radius: inherit;
+    --c: var(--neon);
+    background:
+      linear-gradient(var(--c), var(--c)) top left / 16px 1px no-repeat,
+      linear-gradient(var(--c), var(--c)) top left / 1px 16px no-repeat,
+      linear-gradient(var(--c), var(--c)) top right / 16px 1px no-repeat,
+      linear-gradient(var(--c), var(--c)) top right / 1px 16px no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom left / 16px 1px no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom left / 1px 16px no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom right / 16px 1px no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom right / 1px 16px no-repeat;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+  .hud-panel:hover::before,
+  .hud-panel:focus-within::before {
+    opacity: 1;
+  }
+
+  .text-glow {
+    text-shadow:
+      0 0 22px rgb(56 189 248 / 0.55),
+      0 0 2px rgb(56 189 248 / 0.9);
+  }
+
+  /* Barra de dado: até 24px, ponta arredondada de 4px e base reta. */
+  .barra {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 0 4px 4px 0;
+    transform-origin: left center;
+    background: linear-gradient(90deg, color-mix(in oklab, var(--cor) 62%, transparent), var(--cor));
+    box-shadow: 0 0 16px -3px color-mix(in oklab, var(--cor) 70%, transparent);
+  }
+  .barra::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.38), transparent);
+    transform: translateX(-100%);
+    animation: brilho 1.4s ease-out 0.5s 1 both;
+  }
+  /* Textura 135° só para o estado "anulado sub judice" (significado próprio, com rótulo). */
+  .barra-hachurada {
+    background: repeating-linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--cor) 85%, transparent) 0 3px,
+      color-mix(in oklab, var(--cor) 30%, transparent) 3px 6px
+    );
+    box-shadow: none;
+  }
+
+  .linha-fluxo {
+    background: linear-gradient(90deg, transparent, var(--neon), var(--neon-2), transparent) no-repeat;
+    background-size: 40% 100%;
+  }
+}
+
+@keyframes brilho {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Fundo: grade em perspectiva e linhas de varredura (apenas decoração). */
+.fx-grade {
+  position: fixed;
+  inset: auto -20% -6vh -20%;
+  height: 48vh;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgb(56 189 248 / 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(56 189 248 / 0.18) 1px, transparent 1px);
+  background-size: 64px 64px;
+  transform: perspective(420px) rotateX(64deg);
+  transform-origin: bottom center;
+  mask-image: linear-gradient(to top, black 0%, transparent 80%);
+  animation: grade 16s linear infinite;
+}
+@keyframes grade {
+  to {
+    background-position: 0 64px, 0 0;
+  }
+}
+.fx-varredura {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  background: repeating-linear-gradient(to bottom, rgb(255 255 255 / 0.022) 0 1px, transparent 1px 3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .fx-grade,
+  .fx-varredura {
+    display: none;
+  }
+  .barra {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+}
